@@ -27,7 +27,7 @@ def recocido_simulado(matriz_distancias, coordenadas):
     distancia_actual = calcular_distancia_total(recorrido, matriz_distancias)
 
     T = 100.0
-    T_min = 1e-300
+    T_min = 1e-321
     alpha = 0.995
 
     start_time = time.time()
@@ -67,8 +67,8 @@ def graficar_recorrido(recorrido, coordenadas):
 
 def main():
 
-    archivo_coordenadas = 'Coord1.txt'
-    archivo_matriz_distancias = 'Dist1.txt'
+    archivo_coordenadas = 'Coord2.txt'
+    archivo_matriz_distancias = 'Dist2.txt'
 
     coordenadas = leer_coordenadas(archivo_coordenadas)
     matriz_distancias = leer_matriz_distancias(archivo_matriz_distancias)
