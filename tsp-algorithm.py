@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 import math
+import time
 
 def leer_coordenadas(archivo):
     with open(archivo, 'r') as f:
@@ -26,8 +27,11 @@ def recocido_simulado(matriz_distancias, coordenadas):
     distancia_actual = calcular_distancia_total(recorrido, matriz_distancias)
 
     T = 100.0
-    T_min = 1e-3
+    T_min = 1e-300
     alpha = 0.995
+
+    start_time = time.time()
+    iteracion = 0
 
     while T > T_min:
         i, j = sorted(random.sample(range(1, n), 2))
@@ -39,8 +43,12 @@ def recocido_simulado(matriz_distancias, coordenadas):
             distancia_actual = nueva_distancia
 
         T *= alpha
+        iteracion += 1
 
-    return recorrido, distancia_actual
+        tiempo_transcurrido = time.time() - start_time
+
+
+    return recorrido, distancia_actual, tiempo_transcurrido, iteracion
 
 
 def graficar_recorrido(recorrido, coordenadas):
@@ -58,16 +66,19 @@ def graficar_recorrido(recorrido, coordenadas):
 
 
 def main():
-    archivo_coordenadas = 'Coord3.txt'
-    archivo_matriz_distancias = 'Dist3.txt'
+
+    archivo_coordenadas = 'Coord1.txt'
+    archivo_matriz_distancias = 'Dist1.txt'
 
     coordenadas = leer_coordenadas(archivo_coordenadas)
     matriz_distancias = leer_matriz_distancias(archivo_matriz_distancias)
 
-    recorrido, distancia = recocido_simulado(matriz_distancias, coordenadas)
+    recorrido, distancia, tiempo, iteraciones = recocido_simulado(matriz_distancias, coordenadas)
     print(f'Recorrido óptimo aproximado: {recorrido}')
     print(f'Distancia total: {distancia:.2f}')
-
+    print(f'Tiempo de ejecución:{tiempo:.2f}')
+    print(f'Número de iteraciones:{iteraciones}')
+    
     graficar_recorrido(recorrido, coordenadas)
 
 if __name__ == '__main__':
